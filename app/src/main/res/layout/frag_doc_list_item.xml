@@ -23,17 +23,6 @@
         android:orientation="horizontal"
         android:padding="@dimen/text_view_padding">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Virtual Tour Link: " />
-
-        <TextView
-            android:id="@+id/text_video_link"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/button_top_margin"
-            android:text="video link" />
     </LinearLayout>
     <!-- *************************************************************************************** -->
 

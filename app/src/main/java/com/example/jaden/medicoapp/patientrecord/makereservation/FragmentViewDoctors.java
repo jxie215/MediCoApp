@@ -115,7 +115,10 @@ public class FragmentViewDoctors extends Fragment implements AdapterView.OnItemC
                                 e.printStackTrace();
                             }
                             try {
-                                doctorDetail.setImageUrl(obj.getString("DoctorsPhoto"));
+                                if(obj.getString("DoctorsPhoto").equals("http://rjtmobile.com/medictto/doctor_images/doctor1.jpg"))
+                                    doctorDetail.setImageUrl("http://i.imgur.com/l3W8Lgr.png");
+                                else if(obj.getString("DoctorsPhoto").equals("http://rjtmobile.com/medictto/doctor_images/doctor2.jpg"))
+                                    doctorDetail.setImageUrl("http://i.imgur.com/4vmUjCo.png");
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -153,7 +156,6 @@ public class FragmentViewDoctors extends Fragment implements AdapterView.OnItemC
         List<GroupHeaderItems> items = new ArrayList<>();
         for (int i = 0; i < arrayList.size(); i++) {
             GroupHeaderItems item = new GroupHeaderItems();
-//            item.title = "Group " + i;
             item.docImageUrl = arrayList.get(i).getImageUrl();
             item.docName = arrayList.get(i).getDoctorName();
             item.qualification = arrayList.get(i).getDoctorQualification();
@@ -163,7 +165,6 @@ public class FragmentViewDoctors extends Fragment implements AdapterView.OnItemC
             item.doctorID = arrayList.get(i).getDoctorID();
             GroupChildItems child = new GroupChildItems();
             child.address = arrayList.get(i).getAddress();
-//            child.hint = "Too awesome";
             item.items.add(child);
 
             items.add(item);
@@ -243,8 +244,7 @@ class ExampleAdapter extends AnimatedExpandableListView.AnimatedExpandableListAd
         if (convertView == null) {
             holder = new GroupChildHolder();
             convertView = inflater.inflate(R.layout.frag_doc_list_item, parent, false);
-           holder.address = (TextView) convertView.findViewById(R.id.doc_address);
-//            holder.hint = (TextView) convertView.findViewById(R.id.textHint);
+            holder.address = (TextView) convertView.findViewById(R.id.doc_address);
             holder.buttonBookAppointment = (Button) convertView.findViewById(R.id.button_book_appointment);
             convertView.setTag(holder);
         } else {
@@ -310,8 +310,6 @@ class ExampleAdapter extends AnimatedExpandableListView.AnimatedExpandableListAd
                 .fit()
                 .centerCrop()
                 .into(holder.imageDocPhoto);
-
-
         return convertView;
     }
 

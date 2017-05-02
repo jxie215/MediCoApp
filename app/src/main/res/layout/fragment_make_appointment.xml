@@ -88,6 +88,7 @@
                     android:text="Calendar"
                     android:textStyle="bold" />
 
+
                 <CalendarView
                     android:id="@+id/make_appointment_calendar"
                     android:layout_width="match_parent"
@@ -102,7 +103,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/activity_horizontal_margin"
                     android:layout_marginRight="@dimen/activity_horizontal_margin"
-                    android:layout_marginTop="@dimen/text_view_padding"></HorizontalScrollView>
+                    android:layout_marginTop="@dimen/text_view_padding"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -114,6 +115,17 @@
                         android:layout_margin="@dimen/activity_vertical_margin"
                         android:background="@android:color/darker_gray" />
                 </LinearLayout>
+
+                <!--<Button-->
+                    <!--android:id="@+id/req_apptmnt_button"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_gravity="center"-->
+                    <!--android:layout_margin="@dimen/activity_vertical_margin"-->
+                    <!--android:layout_marginLeft="4dp"-->
+                    <!--android:layout_marginRight="4dp"-->
+                    <!--android:backgroundTint="@drawable/button2_background"/>-->
+                    <!--android:text="Request Appointment" />-->
 
                 <TextView
                     android:layout_width="match_parent"
@@ -144,14 +156,11 @@
 
             <Button
                 android:id="@+id/req_apptmnt_button"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="@dimen/activity_vertical_margin"
+                android:text="Button"
                 android:layout_marginLeft="4dp"
-                android:layout_marginRight="4dp"
-                android:backgroundTint="@drawable/button2_background"
-                android:text="Request Appointment" />
+                android:layout_marginRight="4dp" />
         </LinearLayout>
     </ScrollView>
 </FrameLayout>

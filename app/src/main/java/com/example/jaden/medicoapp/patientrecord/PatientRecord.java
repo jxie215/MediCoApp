@@ -38,7 +38,6 @@ public class PatientRecord extends AppCompatActivity implements PatientRecordToA
     public String FRAGMENT_ADD_MED_TAG = "add_med";
     public String FRAGMENT_MAKE_APPOINTMENT = "make_appointment";
     public String FRAGMENT_VIEW_DOC = "view_doc";
-    public String FRAGMENT_REQ_MED = "request_med";
     private ListView mDrawerList;
     private DrawerLayout mDrawerLayout;
     private ArrayAdapter<String> mAdapter;

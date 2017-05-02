@@ -48,14 +48,12 @@ public class FragmentMakeAppointment extends Fragment {
     private TextView apptmntText, apptmntSlot, mTextDocName, mTextDocEmail, mTextDocPhone;
     private CalendarView mCalendarView;
     private ImageView mImageDoc;
-/*    private Spinner spinnerStartTime, spinnerEndTime;*/
     private String mStartTimeSelected, mEndTimeSelected;
     private HorizontalScrollView timeSlots;
     private Context mContext;
     private AppointmentValues mAppointment = new AppointmentValues();
     private String[] mSlots = new String[13];
     private static final String TIME_SLOT = "http://rjtmobile.com/medictto/appointment_available.php?&";
-    // http://rjtmobile.com/medictto/appointment_available.php?&doctorID=101&currentdate=2017-02-07
     private static final String APPOINTMENT_URL = "http://rjtmobile.com/medictto/appointment_book.php?&";
 
     @Nullable
@@ -66,15 +64,12 @@ public class FragmentMakeAppointment extends Fragment {
         requestAptmntButton = (Button) rootView.findViewById(R.id.req_apptmnt_button);
         apptmntText = (TextView) rootView.findViewById(R.id.apptmnt_text);
         apptmntSlot = (TextView) rootView.findViewById(R.id.apptmnt_time_slot);
-/*        spinnerStartTime = (Spinner) rootView.findViewById(R.id.spinner_start_time);
-        spinnerEndTime = (Spinner) rootView.findViewById(R.id.spinner_end_time);*/
         timeSlots = (HorizontalScrollView) rootView.findViewById(R.id.time_slots);
         mTextDocName = (TextView) rootView.findViewById(R.id.doctor_name);
         mTextDocEmail = (TextView) rootView.findViewById(R.id.doctor_email);
         mTextDocPhone = (TextView) rootView.findViewById(R.id.doctor_phone);
         mImageDoc = (ImageView) rootView.findViewById(R.id.doctor_image);
         mCalendarView = (CalendarView) rootView.findViewById(R.id.make_appointment_calendar);
-        // String date = "2017-02-07";
         Calendar calendar = Calendar.getInstance();
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String date = dateFormat.format(calendar.getTime());
