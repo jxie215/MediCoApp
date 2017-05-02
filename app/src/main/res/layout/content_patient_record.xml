@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:showIn="@layout/activity_patient_record">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/background"
+            android:cropToPadding="true"
+            android:scaleType="center" />
+
+
+        <!-- The first child in the layout is for the main Activity UI-->
+        <RelativeLayout
+            android:id="@+id/navigation_drawer_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="?attr/actionBarSize"
+            tools:context=".LoginActivity">
+
+            <TextView
+                android:id="@+id/welcome_text"
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:background="@drawable/text_background"
+                android:fontFamily="sans-serif-condensed"
+                android:gravity="center"
+                android:padding="@dimen/activity_horizontal_margin"
+                android:text="Welcome"
+                android:textColor="@color/secondary_text"
+                android:textSize="24sp" />
+
+        </RelativeLayout>
+    </FrameLayout>
+
+    <!-- Side navigation drawer UI -->
+    <ListView
+        android:id="@+id/navList"
+        android:layout_width="200dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="left|start"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:background="@drawable/list_selector" />
+
+</android.support.v4.widget.DrawerLayout>

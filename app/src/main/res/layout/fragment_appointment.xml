@@ -1,0 +1,67 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              tools:context="com.example.jaden.medicoapp.doctor.appointment.AppointmentFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/primary"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:orientation="vertical"
+            android:paddingLeft="16dp">
+
+            <TextView
+                android:id="@+id/apnt_year"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="2017" />
+
+            <TextView
+                android:id="@+id/apnt_day"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:text="Tuesday, Mar 21"
+                android:textColor="@android:color/white"
+                android:textSize="26sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/apnt_show"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:clickable="true"
+                android:src="@drawable/ic_calendar"
+                android:tint="@color/colorWhite" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <CalendarView
+        android:id="@+id/apnt_calendar"
+        style="@android:style/Widget.Material.CalendarView"
+        android:layout_width="match_parent"
+        android:layout_height="300dp" />
+    <android.support.v7.widget.RecyclerView
+            android:id="@+id/apnt_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+</LinearLayout>
