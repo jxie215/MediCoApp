@@ -34,15 +34,17 @@ import java.util.Calendar;
 public class FragmentAddMedicineReminder extends Fragment implements View.OnClickListener {
 
     private String LOG_TAG = "svs_me";
-    private Button mSelectTimeButton, mSaveMedButton;
+    private static Button mSelectTimeButton;
+    private Button mSaveMedButton;
     private Context mContext;
     private Switch mAlarmOnOffSwitch;
     private View mRootView;
     private FloatingActionButton fab;
     private EditText mMedListText;
     private CheckBox mMonAlarm, mTueAlarm, mWedAlarm, mThuAlarm, mFriAlarm, mSatAlarm, mSunAlarm;
-    private int mHourOfDay, mMinute;
-    private long mMillisec;
+    private static int mHourOfDay;
+    private static int mMinute;
+    private static long mMillisec;
     private long mAlarmId;
     private int alarmItemNum = -1;
     ArrayList<MedicineViewItems> sharedPrefMedAlarmArr;
@@ -208,7 +210,7 @@ public class FragmentAddMedicineReminder extends Fragment implements View.OnClic
     /***********************************************************************************************
      * Time Picker Dialog Fragment to set the time for medicine.
      */
-    public class TimePickerFragment extends DialogFragment
+    public static class TimePickerFragment extends DialogFragment
             implements TimePickerDialog.OnTimeSetListener {
 
         @Override
