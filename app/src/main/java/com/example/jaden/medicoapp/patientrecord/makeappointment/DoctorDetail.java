@@ -1,4 +1,4 @@
-package com.example.jaden.medicoapp.patientrecord.makereservation;
+package com.example.jaden.medicoapp.patientrecord.makeappointment;
 
 /**
  * Created by snehalsutar on 3/3/16.
