@@ -3,13 +3,13 @@ package com.example.jaden.medicoapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.example.jaden.medicoapp.doctor.DoctorMainActivity;
 import com.example.jaden.medicoapp.patientrecord.PatientRecord;
@@ -30,8 +30,13 @@ public class LoginActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                int selectedId = mRadioGroup.getCheckedRadioButtonId();
+                if (selectedId == R.id.login_patient) {
+                    Intent registrationIntent = new Intent(LoginActivity.this, RegistrationActivity.class);
+                    startActivity(registrationIntent);
+                }else{
+                    Toast.makeText(LoginActivity.this, "Doctor Registration via emails", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         mRadioGroup = (RadioGroup) findViewById(R.id.login_group);
