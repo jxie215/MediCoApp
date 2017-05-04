@@ -82,14 +82,14 @@ public class FragmentBookAppointment extends Fragment {
     private void requestInfoFromDate(String dateRequested, View view)
     {
         tuples = new ArrayList<>();
-        Cursor cursor = sqlDB.rawQuery("SELECT * FROM "+DBHelper.TABLENAME+ "WHERE "+DBHelper.DATE+" LIKE "+dateRequested, null);
+        Cursor cursor = sqlDB.rawQuery("SELECT * FROM "+DBHelper.PAT_TABLENAME+ "WHERE "+DBHelper.PAT_DATE+" LIKE "+dateRequested, null);
         cursor.moveToFirst();
         do {
             if(cursor.getCount() == 0)
                 break;
             String itemId = cursor.getString(cursor.getColumnIndex(DBHelper.ITEMID));
-            String date = cursor.getString(cursor.getColumnIndex(DBHelper.DATE));
-            String slot = cursor.getString(cursor.getColumnIndex(DBHelper.SLOT));
+            String date = cursor.getString(cursor.getColumnIndex(DBHelper.PAT_DATE));
+            String slot = cursor.getString(cursor.getColumnIndex(DBHelper.PAT_SLOT));
 
             String tuple = date+"-"+slot;
             tuples.add(tuple);

@@ -18,9 +18,6 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-/**
- * Created by snehalsutar on 2/16/16.
- */
 public class Utility {
 
     // Used to convert 24hr format to 12hr format with AM/PM values
