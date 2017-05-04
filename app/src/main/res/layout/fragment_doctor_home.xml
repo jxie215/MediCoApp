@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-condensed"
             android:padding="@dimen/activity_horizontal_margin"
-            android:text="Dr. Robinson"
+            android:text="Doctor Adnan"
             android:textSize="30sp" />
     </LinearLayout>
 

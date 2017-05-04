@@ -102,21 +102,35 @@ public class FragmentBookAppointment extends Fragment {
                     Log.i("JIAN", "DateRequested: "+dateRequested);
                     requestInfoFromDate(dateRequested);
                 }
-
             }
         });
 
         prevDateButton.setOnClickListener(new View.OnClickListener() {
+            String dateRequested;
             @Override
             public void onClick(View v) {
+                String dateRequestedStr = chooseDate.getText().toString();
+                int year = Integer.parseInt(dateRequestedStr.substring(0,dateRequestedStr.indexOf("-")));
+                int month = Integer.parseInt(dateRequestedStr.substring(5,7));
+                int date = Integer.parseInt(dateRequestedStr.substring(8))-1;
+                Log.i("JIAN", "DATE: "+year+"-"+month+"-"+date);
 
+                requestInfoFromDate(year+"-0"+month+"-0"+date);
+                chooseDate.setText(year+"-0"+month+"-0"+date);
             }
         });
 
         nextDateButton.setOnClickListener(new View.OnClickListener() {
+            String dateRequested;
             @Override
             public void onClick(View v) {
-
+                String dateRequestedStr = chooseDate.getText().toString();
+                int year = Integer.parseInt(dateRequestedStr.substring(0,dateRequestedStr.indexOf("-")));
+                int month = Integer.parseInt(dateRequestedStr.substring(5,7));
+                int date = Integer.parseInt(dateRequestedStr.substring(8))+1;
+                Log.i("JIAN", "DATE: "+year+"-"+month+"-"+date);
+                requestInfoFromDate(year+"-0"+month+"-0"+date);
+                chooseDate.setText(year+"-0"+month+"-0"+date);
             }
         });
 
@@ -136,7 +150,8 @@ public class FragmentBookAppointment extends Fragment {
                     cv.put(dbHelper.PAT_SLOT, slot);
                     // put fields in table
                     sqlDB.insert(dbHelper.PAT_TABLENAME, null, cv);
-//                    adapter.notifyDataSetChanged();
+                    Toast.makeText(getContext(), "Appointment confirmed with Doctor Adnan", Toast.LENGTH_SHORT).show();
+                    getActivity().onBackPressed();
                 }
 
             }
@@ -166,7 +181,6 @@ public class FragmentBookAppointment extends Fragment {
             String slot10 = cursor.getString(cursor.getColumnIndex(DBHelper.DOC_SLOT10));
             String slot11 = cursor.getString(cursor.getColumnIndex(DBHelper.DOC_SLOT11));
             String slot12 = cursor.getString(cursor.getColumnIndex(DBHelper.DOC_SLOT12));
-
 
             String tuple1 = date+"/"+slot1;
             String tuple2 = date+"/"+slot2;
@@ -218,7 +232,7 @@ public class FragmentBookAppointment extends Fragment {
             if (cursor.getCount() == 0)
                 break;
             String tuple = cursor.getString(cursor.getColumnIndex(DBHelper.PAT_DATE))+"/"+cursor.getString(cursor.getColumnIndex(DBHelper.PAT_SLOT));
-            Log.i("JIAN", "patient slot: "+tuple);
+            Log.i("JIAN", "patient slot removing: "+tuple);
             tuples.remove(tuple);
         }while(cursor.moveToNext());
         if(adapter != null)
