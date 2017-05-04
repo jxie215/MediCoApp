@@ -221,6 +221,17 @@ public class PatientRecord extends AppCompatActivity implements PatientRecordToA
     }
 
     @Override
+    public void callBookAppointmentPicker() {
+        getSupportActionBar().setTitle("Book Appointment");
+
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        FragmentBookAppointment fragment = new FragmentBookAppointment();
+        ft.replace(R.id.navigation_drawer_container, fragment)
+                .addToBackStack(FRAGMENT_MAKE_APPOINTMENT)
+                .commit();
+    }
+
+    @Override
     public void callViewDoctorList() {
         getSupportActionBar().setTitle("All Available Doctors..");
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();

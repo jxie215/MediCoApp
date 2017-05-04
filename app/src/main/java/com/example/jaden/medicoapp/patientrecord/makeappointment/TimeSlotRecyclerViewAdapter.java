@@ -42,18 +42,6 @@ public class TimeSlotRecyclerViewAdapter extends RecyclerView.Adapter<TimeSlotRe
     }
 
     public TimeSlotRecyclerViewAdapter(Context context, ArrayList<String> removeTheseSlots){
-        this.slots.add("9:00AM");
-        this.slots.add("9:30AM");
-        this.slots.add("10:00AM");
-        this.slots.add("10:30AM");
-        this.slots.add("11:00AM");
-        this.slots.add("11:30AM");
-        this.slots.add("1:00AM");
-        this.slots.add("1:30AM");
-        this.slots.add("2:00AM");
-        this.slots.add("2:30AM");
-        this.slots.add("3:00AM");
-        this.slots.add("4:30AM");
 
         for(String slot: removeTheseSlots)
             this.slots.remove(slot);

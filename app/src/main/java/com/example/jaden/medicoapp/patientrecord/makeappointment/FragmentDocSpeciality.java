@@ -60,32 +60,13 @@ public class FragmentDocSpeciality extends Fragment implements AdapterView.OnIte
         adapter = new FragmentDocSpecialityAdapter(arrayList, getActivity());
         gridView.setAdapter(adapter);
         gridView.setOnItemClickListener(FragmentDocSpeciality.this);
-
-//        spinnerLocation = (Spinner) mRootView.findViewById(R.id.spinner_location);
-//        String[] timeArray = getActivity().getResources().getStringArray(R.array.location_name);
-//        ArrayAdapter<String> adapterST = new ArrayAdapter<>(
-//                getActivity(), R.layout.spinner_list_item, timeArray);
-//        spinnerLocation.setAdapter(adapterST);
-//        spinnerLocation.setOnItemSelectedListener(
-//                new AdapterView.OnItemSelectedListener() {
-//                    @Override
-//                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                        mLocationSelected = spinnerLocation.getSelectedItem().toString();
-//                        Toast.makeText(getActivity(), "You have selected " + spinnerLocation.getSelectedItem().toString(),
-//                                Toast.LENGTH_LONG).show();
-//                    }
-//                    @Override
-//                    public void onNothingSelected(AdapterView<?> parent) {
-//                    }
-//                }
-//        );
         return mRootView;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.frag_title_select_loc);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.frag_title_select_field);
     }
 
     @Override
