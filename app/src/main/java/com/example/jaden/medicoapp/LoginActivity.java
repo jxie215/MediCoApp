@@ -72,7 +72,7 @@ public class LoginActivity extends AppCompatActivity {
     public void next_button_function(View view) {
         int selectedId = mRadioGroup.getCheckedRadioButtonId();
         if (selectedId == R.id.login_patient) {
-            if(editTextUsername.getText().toString().compareTo("9700548681")==0
+            if(editTextUsername.getText().toString().compareTo("1234567890")==0
                     && editTextPassword.getText().toString().compareTo("123456")==0) {
                 Intent intent = new Intent(LoginActivity.this, PatientRecord.class);
                 startActivity(intent);
