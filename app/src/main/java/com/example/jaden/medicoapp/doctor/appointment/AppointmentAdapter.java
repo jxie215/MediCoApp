@@ -47,6 +47,8 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentHolder> 
         holder.mTextDate.setText(appointment.getDate());
         int p = appointment.getSlots();
         holder.mTextSlot.setText(timeSlots[p]);
+
+        
         //get img from gallery
 //        String tmp = Environment.getExternalStorageDirectory() + "/MyImages/QR_download.png";
 //        File imgFile = new  File(tmp);
