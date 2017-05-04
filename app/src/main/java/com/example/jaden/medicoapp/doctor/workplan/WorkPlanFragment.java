@@ -107,50 +107,74 @@ public class WorkPlanFragment extends Fragment {
                 if (mCheck1.isChecked()){
                     String s = mCheck1.getText().toString();
                     contentValues.put(dbHelper.DOC_SLOT1, s);
+                } else {
+                    contentValues.put(dbHelper.DOC_SLOT1, "");
                 }
                 if (mCheck2.isChecked()){
                     String s = mCheck2.getText().toString();
                     contentValues.put(dbHelper.DOC_SLOT2, s);
+                } else {
+                    contentValues.put(dbHelper.DOC_SLOT2, "");
                 }
                 if (mCheck3.isChecked()){
                     String s = mCheck3.getText().toString();
                     contentValues.put(dbHelper.DOC_SLOT3, s);
+                }else {
+                    contentValues.put(dbHelper.DOC_SLOT3, "");
                 }
                 if (mCheck4.isChecked()){
                     String s = mCheck4.getText().toString();
                     contentValues.put(dbHelper.DOC_SLOT4, s);
+                }else {
+                    contentValues.put(dbHelper.DOC_SLOT4, "");
                 }
                 if (mCheck5.isChecked()){
                     String s = mCheck5.getText().toString();
                     contentValues.put(dbHelper.DOC_SLOT5, s);
+                }else {
+                    contentValues.put(dbHelper.DOC_SLOT5, "");
                 }
                 if (mCheck6.isChecked()){
                     String s = mCheck6.getText().toString();
                     contentValues.put(dbHelper.DOC_SLOT6, s);
+                }else {
+                    contentValues.put(dbHelper.DOC_SLOT6, "");
                 }
                 if (mCheck7.isChecked()){
                     String s = mCheck7.getText().toString();
                     contentValues.put(dbHelper.DOC_SLOT7, s);
+                }else {
+                    contentValues.put(dbHelper.DOC_SLOT7, "");
                 }
                 if (mCheck8.isChecked()){
                     String s = mCheck8.getText().toString();
                     contentValues.put(dbHelper.DOC_SLOT8, s);
+                }else {
+                    contentValues.put(dbHelper.DOC_SLOT8, "");
                 }
                 if (mCheck9.isChecked()){
                     String s = mCheck9.getText().toString();
                     contentValues.put(dbHelper.DOC_SLOT9, s);
+                }else {
+                    contentValues.put(dbHelper.DOC_SLOT9, "");
                 }
                 if (mCheck10.isChecked()){
                     String s = mCheck10.getText().toString();
                     contentValues.put(dbHelper.DOC_SLOT10, s);
+                }else {
+                    contentValues.put(dbHelper.DOC_SLOT10, "");
                 }
                 if (mCheck11.isChecked()){
                     String s = mCheck11.getText().toString();
                     contentValues.put(dbHelper.DOC_SLOT11, s);
+                }else {
+                    contentValues.put(dbHelper.DOC_SLOT11, "");
                 }
                 if (mCheck12.isChecked()){
                     String s = mCheck12.getText().toString();
                     contentValues.put(dbHelper.DOC_SLOT12, s);
+                }else {
+                    contentValues.put(dbHelper.DOC_SLOT12, "");
                 }
 
                 contentValues.put(dbHelper.DOCID, doctorID);
