@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
@@ -17,6 +18,7 @@ import com.example.jaden.medicoapp.patientrecord.PatientRecord;
 public class LoginActivity extends AppCompatActivity {
 
     private RadioGroup mRadioGroup;
+    private EditText editTextUsername, editTextPassword ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +27,9 @@ public class LoginActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        editTextUsername = (EditText) findViewById(R.id.user_email_id);
+        editTextPassword = (EditText) findViewById(R.id.user_password);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -67,11 +72,23 @@ public class LoginActivity extends AppCompatActivity {
     public void next_button_function(View view) {
         int selectedId = mRadioGroup.getCheckedRadioButtonId();
         if (selectedId == R.id.login_patient) {
-            Intent intent = new Intent(LoginActivity.this, PatientRecord.class);
-            startActivity(intent);
+            if(editTextUsername.getText().toString().compareTo("9700548681")==0
+                    && editTextPassword.getText().toString().compareTo("123456")==0) {
+                Intent intent = new Intent(LoginActivity.this, PatientRecord.class);
+                startActivity(intent);
+            }
+            else{
+                Toast.makeText(this,"Invalid Credentials Try Again",Toast.LENGTH_SHORT).show();
+            }
         } else {
-            Intent intent = new Intent(LoginActivity.this, DoctorMainActivity.class);
-            startActivity(intent);
+            if(editTextUsername.getText().toString().compareTo("4126895349")==0
+                    && editTextPassword.getText().toString().compareTo("123456")==0) {
+                Intent intent = new Intent(LoginActivity.this, DoctorMainActivity.class);
+                startActivity(intent);
+            }
+            else{
+                Toast.makeText(this,"Invalid Credentials Try Again",Toast.LENGTH_SHORT).show();
+            }
         }
 
     }
