@@ -9,8 +9,8 @@
     </string-array>
 
     <string-array name="timings_array">
-        <item>"07:00PM to 08:00PM"</item>
-        <item>"08:00PM to 09:00PM"</item>
+        <item>"07:00AM to 08:00AM"</item>
+        <item>"08:00AM to 09:00AM"</item>
         <item>"09:00AM to 10:00AM"</item>
         <item>"10:00AM to 11:00AM"</item>
         <item>"11:00AM to 12:00PM"</item>
