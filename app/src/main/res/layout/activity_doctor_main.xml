@@ -12,13 +12,13 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:layout_alignParentBottom="true"
-        android:background="@color/primary"
         app:menu="@menu/bottom_doc_nav"
         app:popupTheme="@style/AppTheme.PopupOverlay" />
-    <RelativeLayout
+    <FrameLayout
             android:layout_above="@id/bottom_nav"
             android:id="@+id/doctor_main_container"
-            android:layout_width="match_parent" android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_alignParentStart="true"/>
 
 </RelativeLayout>

@@ -3,6 +3,7 @@ package com.example.jaden.medicoapp.doctor.appointment;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Environment;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -52,7 +53,8 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentHolder> 
         int p = appointment.getSlots();
         holder.mTextSlot.setText(timeSlots[p]);
         //get img from gallery
-        File imgFile = new  File("/sdcard/Images/test_image.jpg");
+        String tmp = Environment.getExternalStorageDirectory() + "/MyImages/QR_download.png";
+        File imgFile = new  File(tmp);
         if(imgFile.exists()) {
             Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
             holder.mImg.setImageBitmap(myBitmap);
