@@ -40,8 +40,8 @@ public class FragmentDocSpeciality extends Fragment implements AdapterView.OnIte
         gridView = (GridView) mRootView.findViewById(R.id.doc_speciality_grid);
         generalDocImg = (ImageView) mRootView.findViewById(R.id.doc_spec_image);
         Picasso.with(getActivity())
-                .load("http://www.medicalwastega.com/images/doctors_medical_waste_disposal.jpg")
-                .placeholder(R.drawable.pill_baw)
+                .load("http://i.imgur.com/BKAMqGu.png")
+                .placeholder(R.drawable.medicinethumbnail)
                 .fit()
                 .centerCrop()
                 .into(generalDocImg);
@@ -145,7 +145,7 @@ class FragmentDocSpecialityAdapter extends BaseAdapter {
             ImageView imageView = (ImageView) gridView.findViewById(R.id.doc_spec_image);
             Picasso.with(mContext)
                     .load(docSpecItems.getImageUrl())
-                    .placeholder(R.drawable.pill_baw)
+                    .placeholder(R.drawable.medicinethumbnail)
                     .fit()
                     .centerCrop()
                     .into(imageView);

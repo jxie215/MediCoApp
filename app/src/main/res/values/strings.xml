@@ -29,7 +29,7 @@
 
     <string name="frag_title_book_appointment">Book Appointment</string>
     <string name="frag_title_view_doctors">View Available Doctors</string>
-    <string name="frag_title_select_loc">Select Location and Field of Specialty</string>
+    <string name="frag_title_select_loc">Select Field of Specialty</string>
     <string name="title_activity_doctor_main">DoctorMainActivity</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
