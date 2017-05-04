@@ -77,10 +77,10 @@ public class PatientRecord extends AppCompatActivity implements PatientRecordToA
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
-                    case 0:
+                    case 1:
                         replaceFragment(new FragmentDocSpeciality());
                         break;
-                    case 1:
+                    case 0:
                         replaceFragment(new FragmentHome());
                         break;
                     case 2:
