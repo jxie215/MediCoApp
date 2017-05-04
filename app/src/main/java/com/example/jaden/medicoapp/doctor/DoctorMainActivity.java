@@ -1,16 +1,20 @@
 package com.example.jaden.medicoapp.doctor;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
+import com.example.jaden.medicoapp.LoginActivity;
 import com.example.jaden.medicoapp.R;
 import com.example.jaden.medicoapp.doctor.appointment.AppointmentFragment;
-import com.example.jaden.medicoapp.doctor.workplan.WorkPlanFragment;
 import com.example.jaden.medicoapp.doctor.home.DoctorHomeFragment;
 import com.example.jaden.medicoapp.doctor.request.RequestFragment;
+import com.example.jaden.medicoapp.doctor.workplan.WorkPlanFragment;
 
 public class DoctorMainActivity extends AppCompatActivity {
     private BottomNavigationView mBottomNavigationView;
@@ -48,5 +52,24 @@ public class DoctorMainActivity extends AppCompatActivity {
                 return true;
             }
         });
+    }
+    boolean adder = true;
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        if (adder){
+            menu.add("Log out");
+            adder = false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent signOutIntent = new Intent(this, LoginActivity.class);
+        Toast.makeText(this,"Logged Out",Toast.LENGTH_SHORT).show();
+        startActivity(signOutIntent);
+        finish();
+        return super.onOptionsItemSelected(item);
     }
 }

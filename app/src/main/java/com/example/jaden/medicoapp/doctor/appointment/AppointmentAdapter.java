@@ -1,9 +1,6 @@
 package com.example.jaden.medicoapp.doctor.appointment;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.Environment;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,8 +19,6 @@ import com.example.jaden.medicoapp.doctor.utils.AppointmentValues;
 import com.example.jaden.medicoapp.doctor.utils.ConfirmedList;
 import com.example.jaden.medicoapp.doctor.utils.RequestList;
 import com.example.jaden.medicoapp.patientrecord.utils.VolleyController;
-
-import java.io.File;
 
 import static com.example.jaden.medicoapp.doctor.request.RequestAdapter.CONFIRM_URL;
 
@@ -52,13 +47,15 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentHolder> 
         holder.mTextDate.setText(appointment.getDate());
         int p = appointment.getSlots();
         holder.mTextSlot.setText(timeSlots[p]);
+
+        
         //get img from gallery
-        String tmp = Environment.getExternalStorageDirectory() + "/MyImages/QR_download.png";
-        File imgFile = new  File(tmp);
-        if(imgFile.exists()) {
-            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-            holder.mImg.setImageBitmap(myBitmap);
-        }
+//        String tmp = Environment.getExternalStorageDirectory() + "/MyImages/QR_download.png";
+//        File imgFile = new  File(tmp);
+//        if(imgFile.exists()) {
+//            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+//            holder.mImg.setImageBitmap(myBitmap);
+//        }
             //====================================================
         holder.mImageCancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,7 +101,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentHolder> 
 
 class AppointmentHolder extends RecyclerView.ViewHolder {
     TextView mTextPatientID, mTextDate, mTextSlot;
-    ImageView mImg, mImageConfirm, mImageCancel;
+    ImageView mImageConfirm, mImageCancel;
 
     public AppointmentHolder(View itemView) {
         super(itemView);
@@ -112,7 +109,6 @@ class AppointmentHolder extends RecyclerView.ViewHolder {
         mTextDate = (TextView) itemView.findViewById(R.id.card_date);
         mTextSlot = (TextView) itemView.findViewById(R.id.card_slot);
         mImageCancel = (ImageView) itemView.findViewById(R.id.card_cancel);
-        mImg = (ImageView) itemView.findViewById(R.id.patient_img);
         mImageConfirm = (ImageView) itemView.findViewById(R.id.card_confirm);
         mImageConfirm.setVisibility(View.GONE);
     }

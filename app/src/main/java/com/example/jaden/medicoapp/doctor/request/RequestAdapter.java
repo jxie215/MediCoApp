@@ -1,8 +1,6 @@
 package com.example.jaden.medicoapp.doctor.request;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Environment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -21,8 +19,6 @@ import com.example.jaden.medicoapp.doctor.utils.AppointmentValues;
 import com.example.jaden.medicoapp.doctor.utils.ConfirmedList;
 import com.example.jaden.medicoapp.doctor.utils.RequestList;
 import com.example.jaden.medicoapp.patientrecord.utils.VolleyController;
-
-import java.io.File;
 
 public class RequestAdapter extends RecyclerView.Adapter<RequestHolder>{
 
@@ -51,21 +47,13 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestHolder>{
         holder.mTextDate.setText(appointment.getDate());
         int p = appointment.getSlots();
         holder.mTextSlot.setText(timeSlots[p]);
-
-//        File imagesFolder = new File(Environment.getExternalStorageDirectory(), "MyImages");
-//        imagesFolder.mkdirs();
-//
-//        File image = new File(imagesFolder, "QR_" + "download" + ".png");
-//
         String tmp = Environment.getExternalStorageDirectory() + "/MyImages/QR_download.png";
         //get img from gallery
-        File imgFile = new  File(tmp);
-        if(imgFile.exists()) {
-            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-            holder.mImg.setImageBitmap(myBitmap);
-        } else {
-//            holder.mImg.setImageResource();
-        }
+//        File imgFile = new  File(tmp);
+//        if(imgFile.exists()) {
+//            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+//            holder.mImg.setImageBitmap(myBitmap);
+//        }
         //====================================================
             holder.mImageConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,14 +105,13 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestHolder>{
 
 class RequestHolder extends RecyclerView.ViewHolder{
     TextView mTextPatientID, mTextDate, mTextSlot;
-    ImageView mImg, mImageConfirm, mImageCancel;
+    ImageView mImageConfirm, mImageCancel;
 
     public RequestHolder(View itemView) {
         super(itemView);
         mTextPatientID = (TextView) itemView.findViewById(R.id.card_patientId);
         mTextDate = (TextView) itemView.findViewById(R.id.card_date);
         mTextSlot = (TextView) itemView.findViewById(R.id.card_slot);
-        mImg = (ImageView) itemView.findViewById(R.id.patient_img);
         mImageCancel = (ImageView) itemView.findViewById(R.id.card_cancel);
         mImageConfirm = (ImageView) itemView.findViewById(R.id.card_confirm);
     }

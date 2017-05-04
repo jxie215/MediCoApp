@@ -1,5 +1,6 @@
 package com.example.jaden.medicoapp.patientrecord;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -15,14 +16,16 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.jaden.medicoapp.Constants;
+import com.example.jaden.medicoapp.LoginActivity;
 import com.example.jaden.medicoapp.R;
 import com.example.jaden.medicoapp.patientrecord.home.FragmentHome;
 import com.example.jaden.medicoapp.patientrecord.makeappointment.DocSpecItems;
+import com.example.jaden.medicoapp.patientrecord.makeappointment.FragmentBookAppointment;
 import com.example.jaden.medicoapp.patientrecord.makeappointment.FragmentDocSpecInterface;
 import com.example.jaden.medicoapp.patientrecord.makeappointment.FragmentDocSpeciality;
-import com.example.jaden.medicoapp.patientrecord.makeappointment.FragmentBookAppointment;
 import com.example.jaden.medicoapp.patientrecord.makeappointment.FragmentViewDoctors;
 import com.example.jaden.medicoapp.patientrecord.makeappointment.GroupHeaderItems;
 import com.example.jaden.medicoapp.patientrecord.medicinereminder.FragmentAddMedicineReminder;
@@ -88,6 +91,12 @@ public class PatientRecord extends AppCompatActivity implements PatientRecordToA
                         break;
                     case 3:
                         replaceFragment(new FragmentUploadImage());
+                        break;
+                    case 4:
+                        Intent signOutIntent = new Intent(PatientRecord.this, LoginActivity.class);
+                        Toast.makeText(PatientRecord.this,"Logged Out",Toast.LENGTH_SHORT).show();
+                        startActivity(signOutIntent);
+                        finish();
                         break;
                     default:
                         replaceFragment(new FragmentHome());
