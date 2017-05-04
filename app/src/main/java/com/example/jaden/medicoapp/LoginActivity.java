@@ -76,6 +76,7 @@ public class LoginActivity extends AppCompatActivity {
                     && editTextPassword.getText().toString().compareTo("123456")==0) {
                 Intent intent = new Intent(LoginActivity.this, PatientRecord.class);
                 startActivity(intent);
+
             }
             else{
                 Toast.makeText(this,"Invalid Credentials Try Again",Toast.LENGTH_SHORT).show();
@@ -93,4 +94,10 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        editTextUsername.setText("");
+        editTextPassword.setText("");
+    }
 }
