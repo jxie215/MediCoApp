@@ -255,8 +255,7 @@ class ExampleAdapter extends AnimatedExpandableListView.AnimatedExpandableListAd
         holder.buttonBookAppointment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mContext, "Clicked", Toast.LENGTH_LONG).show();
-                docSpecInterface.callMakeAppointment(groupHeaderItems);
+
             }
         });
 

@@ -5,16 +5,6 @@
     android:background="@color/colorWhite"
     android:orientation="vertical">
 
-    <Spinner
-        android:id="@+id/spinner_location"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:entries="@array/location_name"
-        android:popupBackground="@android:color/transparent"
-        android:textSize="20sp" />
-
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -29,7 +19,7 @@
             android:layout_height="150dp" />
 
         <TextView
-            android:id="@+id/spec_name"
+            android:id="@+id/view_all_doctors_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
@@ -48,5 +38,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:numColumns="3"></GridView>
+        android:numColumns="3"
+        android:padding="4dp"></GridView>
 </LinearLayout>

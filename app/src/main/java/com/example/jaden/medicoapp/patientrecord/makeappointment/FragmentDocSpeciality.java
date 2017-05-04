@@ -10,13 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.jaden.medicoapp.R;
 import com.squareup.picasso.Picasso;
@@ -33,8 +30,6 @@ public class FragmentDocSpeciality extends Fragment implements AdapterView.OnIte
     FragmentDocSpecialityAdapter adapter;
     GridView gridView;
     FragmentDocSpecInterface docSpecInterface;
-    Spinner spinnerLocation;
-    String mLocationSelected;
     ImageView generalDocImg;
 
     @Nullable
@@ -52,38 +47,38 @@ public class FragmentDocSpeciality extends Fragment implements AdapterView.OnIte
                 .into(generalDocImg);
         generalDocImg.setOnClickListener(this);
         arrayList = new ArrayList<>();
-        arrayList.add(new DocSpecItems("https://higherlogicdownload.s3.amazonaws.com/NADP/d5e8b59f-3f90-4f2a-88a4-18faaee8a646/UploadedImages/shutterstock_63465202.jpg", "DENTAL"));
-        arrayList.add(new DocSpecItems("http://west11thstreetpediatrics.com/wp-content/uploads/2012/02/img-aboutus.jpg", "PEDIATRICIAN"));
-        arrayList.add(new DocSpecItems("http://centralortho.com/images/home/home-pic.jpg", "ORTHOPEDIC"));
-        arrayList.add(new DocSpecItems("http://internetmedicine.com/wp-content/uploads/2012/09/neurologist1.jpg", "NEUROLOGIST"));
-        arrayList.add(new DocSpecItems("http://www.almashospital.com/wp-content/uploads/2013/03/cardiology.jpg", "CARDIOLOGIST"));
-        arrayList.add(new DocSpecItems("http://cdn3-www.thefashionspot.com/assets/uploads/2015/08/facial.jpg", "DERMATOLOGIST"));
-        arrayList.add(new DocSpecItems("https://static.abdserotec.com/2014/coagulation-and-hematology-antibodies_210_210.jpg", "HEMATOLOGIST"));
-        arrayList.add(new DocSpecItems("http://www.iran-daily.com/File/File/125076", "RADIOLOGIST"));
-        arrayList.add(new DocSpecItems("https://edc2.healthtap.com/ht-staging/user_answer/avatars/991561/large/open-uri20130331-2947-1ypdfij.jpeg?1386580006", "OPTHOMOLOGIST"));
+        arrayList.add(new DocSpecItems("http://i.imgur.com/xMnrGOd.png", "DENTAL"));
+        arrayList.add(new DocSpecItems("http://i.imgur.com/KRKgaef.png", "PEDIATRICIAN"));
+        arrayList.add(new DocSpecItems("http://i.imgur.com/NNIrRXS.png", "ORTHOPEDIC"));
+        arrayList.add(new DocSpecItems("http://i.imgur.com/tuMOTPs.png", "NEUROLOGIST"));
+        arrayList.add(new DocSpecItems("http://i.imgur.com/soeBaHu.png", "CARDIOLOGIST"));
+        arrayList.add(new DocSpecItems("http://i.imgur.com/vSHNevc.png", "DERMATOLOGIST"));
+        arrayList.add(new DocSpecItems("http://i.imgur.com/qRtgxN7.png", "HEMATOLOGIST"));
+        arrayList.add(new DocSpecItems("http://i.imgur.com/eHuqoWY.png", "RADIOLOGIST"));
+        arrayList.add(new DocSpecItems("http://i.imgur.com/UlkqQ1i.png", "OPTHOMOLOGIST"));
 
         adapter = new FragmentDocSpecialityAdapter(arrayList, getActivity());
         gridView.setAdapter(adapter);
         gridView.setOnItemClickListener(FragmentDocSpeciality.this);
 
-        spinnerLocation = (Spinner) mRootView.findViewById(R.id.spinner_location);
-        String[] timeArray = getActivity().getResources().getStringArray(R.array.location_name);
-        ArrayAdapter<String> adapterST = new ArrayAdapter<>(
-                getActivity(), R.layout.spinner_list_item, timeArray);
-        spinnerLocation.setAdapter(adapterST);
-        spinnerLocation.setOnItemSelectedListener(
-                new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        mLocationSelected = spinnerLocation.getSelectedItem().toString();
-                        Toast.makeText(getActivity(), "You have selected " + spinnerLocation.getSelectedItem().toString(),
-                                Toast.LENGTH_LONG).show();
-                    }
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-                    }
-                }
-        );
+//        spinnerLocation = (Spinner) mRootView.findViewById(R.id.spinner_location);
+//        String[] timeArray = getActivity().getResources().getStringArray(R.array.location_name);
+//        ArrayAdapter<String> adapterST = new ArrayAdapter<>(
+//                getActivity(), R.layout.spinner_list_item, timeArray);
+//        spinnerLocation.setAdapter(adapterST);
+//        spinnerLocation.setOnItemSelectedListener(
+//                new AdapterView.OnItemSelectedListener() {
+//                    @Override
+//                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                        mLocationSelected = spinnerLocation.getSelectedItem().toString();
+//                        Toast.makeText(getActivity(), "You have selected " + spinnerLocation.getSelectedItem().toString(),
+//                                Toast.LENGTH_LONG).show();
+//                    }
+//                    @Override
+//                    public void onNothingSelected(AdapterView<?> parent) {
+//                    }
+//                }
+//        );
         return mRootView;
     }
 

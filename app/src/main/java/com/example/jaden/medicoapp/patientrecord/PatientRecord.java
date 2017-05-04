@@ -22,7 +22,7 @@ import com.example.jaden.medicoapp.patientrecord.home.FragmentHome;
 import com.example.jaden.medicoapp.patientrecord.makeappointment.DocSpecItems;
 import com.example.jaden.medicoapp.patientrecord.makeappointment.FragmentDocSpecInterface;
 import com.example.jaden.medicoapp.patientrecord.makeappointment.FragmentDocSpeciality;
-import com.example.jaden.medicoapp.patientrecord.makeappointment.FragmentMakeAppointment;
+import com.example.jaden.medicoapp.patientrecord.makeappointment.FragmentBookAppointment;
 import com.example.jaden.medicoapp.patientrecord.makeappointment.FragmentViewDoctors;
 import com.example.jaden.medicoapp.patientrecord.makeappointment.GroupHeaderItems;
 import com.example.jaden.medicoapp.patientrecord.medicinereminder.FragmentAddMedicineReminder;
@@ -197,7 +197,7 @@ public class PatientRecord extends AppCompatActivity implements PatientRecordToA
     @Override
     public void callNextFragment(DocSpecItems docSpecItems) {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        FragmentMakeAppointment fragment = new FragmentMakeAppointment();
+        FragmentBookAppointment fragment = new FragmentBookAppointment();
         ft.replace(R.id.navigation_drawer_container, fragment)
                 .addToBackStack(FRAGMENT_MAKE_APPOINTMENT)
                 .commit();
@@ -213,7 +213,7 @@ public class PatientRecord extends AppCompatActivity implements PatientRecordToA
         bundle.putString(Constants.GROUP_HEADER_ITEMS, json);
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        FragmentMakeAppointment fragment = new FragmentMakeAppointment();
+        FragmentBookAppointment fragment = new FragmentBookAppointment();
         fragment.setArguments(bundle);
         ft.replace(R.id.navigation_drawer_container, fragment)
                 .addToBackStack(FRAGMENT_MAKE_APPOINTMENT)
