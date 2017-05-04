@@ -37,7 +37,8 @@
             android:label="@string/title_activity_alarm_notification"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".doctor.DoctorMainActivity"></activity>
-        <activity android:name=".RegistrationActivity"></activity>
+        <activity android:name=".RegistrationActivity"
+            android:parentActivityName=".LoginActivity"></activity>
     </application>
 
 </manifest>
