@@ -1,8 +1,12 @@
 package com.example.jaden.medicoapp.doctor.workplan;
 
 
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +19,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.jaden.medicoapp.DBHelper;
 import com.example.jaden.medicoapp.R;
 import com.example.jaden.medicoapp.patientrecord.utils.VolleyController;
 
@@ -26,6 +31,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import static com.example.jaden.medicoapp.DBHelper.DOC_TABLENAME;
+
 public class WorkPlanFragment extends Fragment {
     private View rootView;
     private CalendarView mCalendarView;
@@ -33,7 +40,10 @@ public class WorkPlanFragment extends Fragment {
     private CheckBox mCheck1, mCheck2, mCheck3, mCheck4, mCheck5, mCheck6, mCheck7, mCheck8, mCheck9, mCheck10, mCheck11,mCheck12;
     private String[] timeSlots;
     private static final String TIME_SLOT = "http://rjtmobile.com/medictto/appointment_available.php?&";
+    private final String doctorID = "101";
 
+    DBHelper dbHelper;
+    SQLiteDatabase sqlDB;
 
     public WorkPlanFragment() {
         // Required empty public constructor
@@ -52,6 +62,8 @@ public class WorkPlanFragment extends Fragment {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String date = dateFormat.format(calendar.getTime());
         getInfor(date);
+        dbHelper = new DBHelper(getContext());
+        sqlDB = dbHelper.getWritableDatabase();
         return rootView;
     }
 
@@ -87,15 +99,83 @@ public class WorkPlanFragment extends Fragment {
         mCheck11.setText(timeSlots[10]);
         mCheck12.setText(timeSlots[11]);
         mButtonConfirm.setOnClickListener(new View.OnClickListener() {
+
+            ContentValues contentValues = new ContentValues();
+
             @Override
             public void onClick(View view) {
+                if (mCheck1.isChecked()){
+                    String s = mCheck1.getText().toString();
+                    contentValues.put(dbHelper.DOC_SLOT1, s);
+                }
+                if (mCheck2.isChecked()){
+                    String s = mCheck2.getText().toString();
+                    contentValues.put(dbHelper.DOC_SLOT2, s);
+                }
+                if (mCheck3.isChecked()){
+                    String s = mCheck3.getText().toString();
+                    contentValues.put(dbHelper.DOC_SLOT3, s);
+                }
+                if (mCheck4.isChecked()){
+                    String s = mCheck4.getText().toString();
+                    contentValues.put(dbHelper.DOC_SLOT4, s);
+                }
+                if (mCheck5.isChecked()){
+                    String s = mCheck5.getText().toString();
+                    contentValues.put(dbHelper.DOC_SLOT5, s);
+                }
+                if (mCheck6.isChecked()){
+                    String s = mCheck6.getText().toString();
+                    contentValues.put(dbHelper.DOC_SLOT6, s);
+                }
+                if (mCheck7.isChecked()){
+                    String s = mCheck7.getText().toString();
+                    contentValues.put(dbHelper.DOC_SLOT7, s);
+                }
+                if (mCheck8.isChecked()){
+                    String s = mCheck8.getText().toString();
+                    contentValues.put(dbHelper.DOC_SLOT8, s);
+                }
+                if (mCheck9.isChecked()){
+                    String s = mCheck9.getText().toString();
+                    contentValues.put(dbHelper.DOC_SLOT9, s);
+                }
+                if (mCheck10.isChecked()){
+                    String s = mCheck10.getText().toString();
+                    contentValues.put(dbHelper.DOC_SLOT10, s);
+                }
+                if (mCheck11.isChecked()){
+                    String s = mCheck11.getText().toString();
+                    contentValues.put(dbHelper.DOC_SLOT11, s);
+                }
+                if (mCheck12.isChecked()){
+                    String s = mCheck12.getText().toString();
+                    contentValues.put(dbHelper.DOC_SLOT12, s);
+                }
 
+                contentValues.put(dbHelper.DOCID, doctorID);
+                Log.i("table", contentValues.toString());
+                sqlDB.insert(DOC_TABLENAME, null, contentValues);
+                Snackbar.make(rootView, "Work plan confirmed", Snackbar.LENGTH_LONG).show();
             }
         });
         mButtonCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                mCheck1.setChecked(false);
+                mCheck2.setChecked(false);
+                mCheck3.setChecked(false);
+                mCheck4.setChecked(false);
+                mCheck5.setChecked(false);
+                mCheck6.setChecked(false);
+                mCheck7.setChecked(false);
+                mCheck8.setChecked(false);
+                mCheck9.setChecked(false);
+                mCheck10.setChecked(false);
+                mCheck11.setChecked(false);
+                mCheck12.setChecked(false);
+                Snackbar.make(rootView, "Work plan canceled", Snackbar.LENGTH_LONG).show();
+                sqlDB.execSQL("delete from "+ DOC_TABLENAME);
             }
         });
         mCalendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
@@ -121,7 +201,7 @@ public class WorkPlanFragment extends Fragment {
     }
 
     private void getInfor(String date) {
-        String doctorID = "101";
+//        String doctorID = "101";
         // get slot infor
         // date = "2017-02-07";
         String url = TIME_SLOT + "&doctorID=" + doctorID + "&currentdate=" + date;
