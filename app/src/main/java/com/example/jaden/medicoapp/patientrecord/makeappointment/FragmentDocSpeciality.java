@@ -130,7 +130,6 @@ class FragmentDocSpecialityAdapter extends BaseAdapter {
                     .fit()
                     .centerCrop()
                     .into(imageView);
-
         } else {
             gridView = convertView;
         }

@@ -44,7 +44,7 @@ public class DBHelper extends SQLiteOpenHelper{
         sqLiteDatabase.execSQL(createPatTable);
 
         /*-------------doctor make plan table---------------------------*/
-        String createDocTable = " CREATE TABLE " + DOC_TABLENAME + "("
+        String createDocTable = " CREATE TABLE " + DOC_TABLENAME + " ("
                 + DOCID + " INTEGER PRIMARY KEY, "
                 + DOC_DATE + " TEXT, "
                 + DOC_SLOT1 + " TEXT, "

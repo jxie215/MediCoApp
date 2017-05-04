@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.jaden.medicoapp.R;
@@ -33,18 +32,31 @@ public class TimeSlotRecyclerViewAdapter extends RecyclerView.Adapter<TimeSlotRe
     public static class RViewHolder extends RecyclerView.ViewHolder{
         TextView timeSlotLabel;
 
-        ImageView image;
-        public RViewHolder(View itemView) {
+        public RViewHolder(final View itemView) {
             super(itemView);
             this.timeSlotLabel = (TextView) itemView.findViewById(R.id.time_slot_label);
+            this.timeSlotLabel.setOnClickListener(new View.OnClickListener() {
+                boolean isSelected = false;
+                @Override
+                public void onClick(View v) {
+                    if(!isSelected) {
+                        isSelected = true;
+                        FragmentBookAppointment.setDateSlotSelection((String)itemView.getTag());
+                        v.setBackgroundColor(v.getResources().getColor(R.color.primary));
+                    }
+                    else {
+                        isSelected = false;
+                        FragmentBookAppointment.dateSlotSelected = null;
+                        v.setBackgroundColor(v.getResources().getColor(R.color.simply_white));
+                    }
+                }
+            });
 
         }
     }
 
-    public TimeSlotRecyclerViewAdapter(Context context, ArrayList<String> removeTheseSlots){
-
-        for(String slot: removeTheseSlots)
-            this.slots.remove(slot);
+    public TimeSlotRecyclerViewAdapter(Context context, ArrayList<String> slots){
+        this.slots = slots;
         layoutInflater = LayoutInflater.from(context);
     }
 
@@ -70,7 +82,8 @@ public class TimeSlotRecyclerViewAdapter extends RecyclerView.Adapter<TimeSlotRe
     @Override
     public void onBindViewHolder(final RViewHolder holder, int position) {
         String slot = slots.get(position);
-        holder.timeSlotLabel.setText(slots.get(position).substring(slot.indexOf("-")));
+        holder.timeSlotLabel.setText(slots.get(position).substring(slot.indexOf("/")+1));
+        holder.itemView.setTag(slots.get(position));
     }
 
     @Override
