@@ -7,4 +7,5 @@ public interface FragmentDocSpecInterface {
     void callNextFragment(DocSpecItems docSpecItems);
     void callViewDoctorList();
     void callMakeAppointment(GroupHeaderItems groupHeaderItems);
+    void callBookAppointmentPicker();
 }

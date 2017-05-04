@@ -59,6 +59,7 @@ public class FragmentBookAppointment extends Fragment {
         requestAptmntButton = (Button) view.findViewById(R.id.req_apptmnt_button);
         mTextDocName = (TextView) view.findViewById(R.id.doctor_name_label);
         mImageDoc = (ImageView) view.findViewById(R.id.doc_photo);
+        chooseDate = (EditText) view.findViewById(R.id.choose_date);
 
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date todaysDate = new Date();

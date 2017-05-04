@@ -45,6 +45,7 @@ public class FragmentViewDoctors extends Fragment implements AdapterView.OnItemC
     private ExampleAdapter adapter;
     private Context mContext;
     private String area, speciality;
+    private FragmentDocSpecInterface docSpecInterface;
 
     @Nullable
     @Override
@@ -56,6 +57,8 @@ public class FragmentViewDoctors extends Fragment implements AdapterView.OnItemC
         area = "1";
         speciality = "1";
         getData();
+
+        docSpecInterface = (FragmentDocSpecInterface) getActivity();
         return mRootView;
     }
 
@@ -255,7 +258,7 @@ class ExampleAdapter extends AnimatedExpandableListView.AnimatedExpandableListAd
         holder.buttonBookAppointment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                docSpecInterface.callBookAppointmentPicker();
             }
         });
 

@@ -7,7 +7,8 @@
     <ImageView
         android:id="@+id/doc_spec_image"
         android:layout_width="match_parent"
-        android:layout_height="150dp" />
+        android:layout_height="150dp"
+        android:padding="16dp" />
 
     <TextView
         android:id="@+id/spec_name"
@@ -21,6 +22,6 @@
         android:text="Specialization Name"
         android:textAlignment="center"
         android:textColor="@color/secondary_text"
-        android:textSize="17sp" />
+        android:textSize="14sp" />
 
 </FrameLayout>
