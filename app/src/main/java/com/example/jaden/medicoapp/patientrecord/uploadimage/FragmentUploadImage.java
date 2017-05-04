@@ -2,11 +2,11 @@ package com.example.jaden.medicoapp.patientrecord.uploadimage;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -26,6 +26,8 @@ import java.io.FileInputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by snehalsutar on 2/18/16.
@@ -45,8 +47,8 @@ public class FragmentUploadImage extends Fragment implements View.OnClickListene
 
 
     /**********  File Path *************/
-    final String uploadFilePath = "/mnt/sdcard/";
-    final String uploadFileName = "download.jpg";
+    final String uploadFilePath = Environment.getExternalStorageDirectory().toString();
+    final String uploadFileName = "/download.jpg";
     Uri imageUri                      = null;
 
     /***********************************************************************************************
@@ -63,7 +65,7 @@ public class FragmentUploadImage extends Fragment implements View.OnClickListene
         uploadButton = (Button)rootView.findViewById(R.id.uploadButton);
         messageText  = (TextView)rootView.findViewById(R.id.messageText);
 
-        messageText.setText("Uploading file path :- '/mnt/sdcard/"+uploadFileName+"'");
+        messageText.setText("Uploading file path :- '"+uploadFilePath+uploadFileName+"'");
 
 
         chooseFromGalleryButton = (Button) rootView.findViewById(R.id.button_choose_from_gallery);
@@ -192,7 +194,7 @@ public class FragmentUploadImage extends Fragment implements View.OnClickListene
 
                             String msg = "File Upload Completed.\n\n See uploaded file here : \n\n"
                                     + " http://www.androidexample.com/media/uploads/"
-                                    + uploadFileName;
+                                    + "download.jpg";
 
                             messageText.setText(msg);
                             Toast.makeText(mContext, "File Upload Complete.",
@@ -264,44 +266,53 @@ public class FragmentUploadImage extends Fragment implements View.OnClickListene
     }
 
     private void chooseImageFromCamera() {
-//        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//        Uri uri = null;// getFileUri();
-//        intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-//        startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
 
-        /*************************** Camera Intent Start ************************/
+//
+//        /*************************** Camera Intent Start ************************/
+//
+//        // Define the file-name to save photo taken by Camera activity
+//
+//        String fileName = "Camera_Example.jpg";
+//
+//        // Create parameters for Intent with filename
+//
+//        ContentValues values = new ContentValues();
+//
+//        values.put(MediaStore.Images.Media.TITLE, fileName);
+//
+//        values.put(MediaStore.Images.Media.DESCRIPTION,"Image capture by camera");
+//
+//        // imageUri is the current activity attribute, define and save it for later usage
+//
+//        imageUri = mContext.getContentResolver().insert(
+//                MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+//
+//        /**** EXTERNAL_CONTENT_URI : style URI for the "primary" external storage volume. ****/
+//
+//
+//        // Standard Intent action that can be sent to have the camera
+//        // application capture an image and return it.
+//
+//        Intent intent = new Intent( MediaStore.ACTION_IMAGE_CAPTURE );
+//
+//        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+//
+//        intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
+//
+//        startActivityForResult( intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
 
-        // Define the file-name to save photo taken by Camera activity
+        Intent imageIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
 
-        String fileName = "Camera_Example.jpg";
+        //folder stuff
+        File imagesFolder = new File(Environment.getExternalStorageDirectory(), "MyImages");
+        imagesFolder.mkdirs();
 
-        // Create parameters for Intent with filename
+        File image = new File(imagesFolder, "QR_" + "download" + ".png");
+        Uri uriSavedImage = Uri.fromFile(image);
 
-        ContentValues values = new ContentValues();
-
-        values.put(MediaStore.Images.Media.TITLE, fileName);
-
-        values.put(MediaStore.Images.Media.DESCRIPTION,"Image capture by camera");
-
-        // imageUri is the current activity attribute, define and save it for later usage
-
-        imageUri = mContext.getContentResolver().insert(
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-
-        /**** EXTERNAL_CONTENT_URI : style URI for the "primary" external storage volume. ****/
-
-
-        // Standard Intent action that can be sent to have the camera
-        // application capture an image and return it.
-
-        Intent intent = new Intent( MediaStore.ACTION_IMAGE_CAPTURE );
-
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-
-        intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
-
-        startActivityForResult( intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
-
+        imageIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriSavedImage);
+        startActivityForResult(imageIntent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
         /*************************** Camera Intent End ************************/
 
     }
