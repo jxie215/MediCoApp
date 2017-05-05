@@ -178,27 +178,49 @@ public class FragmentUploadImage extends Fragment implements View.OnClickListene
     private void chooseImageFromDatabase() {
         mPhotosList.clear();
         mAdapter.notifyDataSetChanged();
-        Cursor cursor = sqlDB.rawQuery("SELECT * FROM "+dbHelper.IMAGE_TABLE, null);
-        if(cursor.getCount()>0) {
-            cursor.moveToFirst();
+        Cursor cursor = null;
+        if(!edit.getText().toString().isEmpty()) {
+
+            if(spinner.getSelectedItem().toString().compareTo("Name")==0){
+                cursor = sqlDB.rawQuery("SELECT * FROM " + dbHelper.IMAGE_TABLE + " where "
+                        + dbHelper.IMAGE_NAME + " LIKE '%" +edit.getText().toString() +"%'", null);
+            }
+            else if(spinner.getSelectedItem().toString().compareTo("Date")==0){
+                cursor = sqlDB.rawQuery("SELECT * FROM " + dbHelper.IMAGE_TABLE + " where "
+                        + dbHelper.IMAGE_DATE + " LIKE '%" +edit.getText().toString() +"%'", null);
+            }
+            else if(spinner.getSelectedItem().toString().compareTo("Doctor")==0){
+                cursor = sqlDB.rawQuery("SELECT * FROM " + dbHelper.IMAGE_TABLE + " where "
+                        + dbHelper.IMAGE_NAME + " LIKE '%" +edit.getText().toString() +"%'", null);
+            }else{
+                Toast.makeText(getActivity(),"Select a Category from List",Toast.LENGTH_SHORT).show();
+                return;
+            }
+            //cursor = sqlDB.rawQuery("SELECT * FROM " + dbHelper.IMAGE_TABLE, null);
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
 //        Toast.makeText(getActivity(),"table rows: " + String.valueOf(cursor.getCount()),Toast.LENGTH_SHORT).show();
 //        Toast.makeText(getActivity(),"Spinner Value "+ String.valueOf(spinner.getSelectedItem()),Toast.LENGTH_SHORT).show();
 //        Toast.makeText(getActivity(),"date " + cursor.getString(cursor.getColumnIndex(dbHelper.IMAGE_DATE)),Toast.LENGTH_SHORT).show();
-            do {
-                Photo photo = new Photo();
-                byte[] byteArray = cursor.getBlob(4);
+                do {
+                    Photo photo = new Photo();
+                    byte[] byteArray = cursor.getBlob(4);
 
-                Bitmap bm = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
-                photo.setName(cursor.getString(cursor.getColumnIndex(dbHelper.IMAGE_NAME)));
-                photo.setDoctor(cursor.getString(cursor.getColumnIndex(dbHelper.DOCTOR)));
-                photo.setDate(cursor.getString(cursor.getColumnIndex(dbHelper.IMAGE_DATE)));
-                photo.setImage(bm);
-                mPhotosList.add(photo);
-                mAdapter.notifyDataSetChanged();
-            } while (cursor.moveToNext());
+                    Bitmap bm = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+                    photo.setName(cursor.getString(cursor.getColumnIndex(dbHelper.IMAGE_NAME)));
+                    photo.setDoctor(cursor.getString(cursor.getColumnIndex(dbHelper.DOCTOR)));
+                    photo.setDate(cursor.getString(cursor.getColumnIndex(dbHelper.IMAGE_DATE)));
+                    photo.setImage(bm);
+                    mPhotosList.add(photo);
+                    mAdapter.notifyDataSetChanged();
+                } while (cursor.moveToNext());
+            } else {
+                Toast.makeText(getActivity(), "No Such Record in Database", Toast.LENGTH_SHORT).show();
+            }
         }else{
-            Toast.makeText(getActivity(),"No Such Record in Database",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Enter a search term", Toast.LENGTH_SHORT).show();
         }
+
     }
 
 }
