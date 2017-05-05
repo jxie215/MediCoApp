@@ -100,4 +100,10 @@ public class LoginActivity extends AppCompatActivity {
         editTextUsername.setText("");
         editTextPassword.setText("");
     }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        finish();
+    }
 }

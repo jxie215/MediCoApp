@@ -113,6 +113,7 @@ public class PatientRecord extends AppCompatActivity implements PatientRecordToA
     private void replaceFragment(Fragment fragment) {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.navigation_drawer_container, fragment);
+        ft.addToBackStack(null);
         ft.commit();
     }
 
@@ -249,4 +250,5 @@ public class PatientRecord extends AppCompatActivity implements PatientRecordToA
                 .addToBackStack(FRAGMENT_VIEW_DOC)
                 .commit();
     }
+
 }

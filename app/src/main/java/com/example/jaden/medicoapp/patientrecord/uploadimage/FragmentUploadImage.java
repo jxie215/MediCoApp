@@ -1,29 +1,40 @@
 package com.example.jaden.medicoapp.patientrecord.uploadimage;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.jaden.medicoapp.DBHelper;
 import com.example.jaden.medicoapp.R;
 
-import static android.app.Activity.RESULT_OK;
+import java.io.ByteArrayOutputStream;
+import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+
+import static com.example.jaden.medicoapp.DBHelper.IMAGE_TABLE;
 
 /**
  * Created by snehalsutar on 2/18/16.
@@ -32,20 +43,21 @@ public class FragmentUploadImage extends Fragment implements View.OnClickListene
 
     private static final int IMAGE_PICK_REQUEST_CODE = 1;
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 2;
-    TextView messageText;
-    ImageView imageView;
-    Button uploadButton;
-    Button chooseFromGalleryButton, clickFromCameraButton;
-    int serverResponseCode = 0;
-    ProgressDialog dialog = null;
+    EditText img_name, doctor_name, edit;
+    Button chose_img, search;
+    Spinner spinner;
     Context mContext;
     Activity mActivity;
-    String upLoadServerUri = null;
+    DBHelper dbHelper;
+    SQLiteDatabase sqlDB;
+    ContentValues contentValues;
+    private RecyclerView mRecyclerView;
+    private LinearLayoutManager mLinearLayoutManager;
+    private RecyclerAdapter mAdapter;
+    ArrayList<Photo> mPhotosList;
 
 
     /**********  File Path *************/
-    final String uploadFilePath = Environment.getExternalStorageDirectory().toString();
-    final String uploadFileName = "/download.jpg";
     Uri imageUri                      = null;
 
     /***********************************************************************************************
@@ -59,300 +71,127 @@ public class FragmentUploadImage extends Fragment implements View.OnClickListene
         mContext=getActivity();
         mActivity = getActivity();
 
-//        uploadButton = (Button)rootView.findViewById(R.id.uploadButton);
-//        messageText  = (TextView)rootView.findViewById(R.id.messageText);
-        imageView = (ImageView) rootView.findViewById(R.id.imageViewShowImage);
-//        messageText.setText("Uploading file path :- '"+uploadFilePath+uploadFileName+"'");
+        img_name = (EditText) rootView.findViewById(R.id.img_name);
+        doctor_name = (EditText) rootView.findViewById(R.id.doctor_name);
+        edit = (EditText) rootView.findViewById(R.id.edit);
+
+        chose_img = (Button) rootView.findViewById(R.id.chose_img);
+        search = (Button) rootView.findViewById(R.id.search);
+        chose_img.setOnClickListener(this);
+        search.setOnClickListener(this);
+        dbHelper = new DBHelper(getContext());
+        sqlDB = dbHelper.getWritableDatabase();
+        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.upload_img_recyclerview);
+        mLinearLayoutManager = new LinearLayoutManager(getActivity());
+        mRecyclerView.setLayoutManager(mLinearLayoutManager);
+        mPhotosList = new ArrayList<>();
+        mAdapter = new RecyclerAdapter(mPhotosList);
+        mRecyclerView.setAdapter(mAdapter);
 
 
-        chooseFromGalleryButton = (Button) rootView.findViewById(R.id.button_choose_from_gallery);
-        clickFromCameraButton = (Button) rootView.findViewById(R.id.button_click_from_camera);
-        chooseFromGalleryButton.setOnClickListener(this);
-        clickFromCameraButton.setOnClickListener(this);
-        /************* Php script path ****************/
-        upLoadServerUri = "http://rjtmobile.com/ansari/image_store.php";
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item) {
 
-//        uploadButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                dialog = ProgressDialog.show(mContext, "", "Uploading file...", true);
-//
-//                new Thread(new Runnable() {
-//                    public void run() {
-//                        mActivity.runOnUiThread(new Runnable() {
-//                            public void run() {
-//                                messageText.setText("uploading started.....");
-//                            }
-//                        });
-//
-//                        uploadFile(uploadFilePath + "" + uploadFileName);
-//
-//                    }
-//                }).start();
-//            }
-//        });
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
 
+                View v = super.getView(position, convertView, parent);
+                if (position == getCount()) {
+                    ((TextView)v.findViewById(android.R.id.text1)).setText("");
+                    ((TextView)v.findViewById(android.R.id.text1)).setHint(getItem(getCount())); //"Hint to be displayed"
+                }
 
+                return v;
+            }
+
+            @Override
+            public int getCount() {
+                return super.getCount()-1; // you dont display last item. It is used as hint.
+            }
+
+        };
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter.add("Date");
+        adapter.add("Name");
+        adapter.add("Doctor");
+        adapter.add("Select Search Category");
+        spinner = (Spinner) rootView.findViewById(R.id.spinner);
+        spinner.setAdapter(adapter);
+        spinner.setSelection(adapter.getCount()); //display hint
         return rootView;
     }
 
-//    public int uploadFile(String sourceFileUri) {
-//
-//
-//        String fileName = sourceFileUri;
-//
-//        HttpURLConnection conn = null;
-//        DataOutputStream dos = null;
-//        String lineEnd = "\r\n";
-//        String twoHyphens = "--";
-//        String boundary = "*****";
-//        int bytesRead, bytesAvailable, bufferSize;
-//        byte[] buffer;
-//        int maxBufferSize = 1 * 1024 * 1024;
-//        File sourceFile = new File(sourceFileUri);
-//
-//        if (!sourceFile.isFile()) {
-//
-//            dialog.dismiss();
-//
-//            Log.e("uploadFile", "Source File not exist :"
-//                    + uploadFilePath + "" + uploadFileName);
-//
-//            mActivity.runOnUiThread(new Runnable() {
-//                public void run() {
-//                    messageText.setText("Source File not exist :"
-//                            + uploadFilePath + "" + uploadFileName);
-//                }
-//            });
-//
-//            return 0;
-//
-//        }
-//        else
-//        {
-//            try {
-//
-//                // open a URL connection to the Servlet
-//                FileInputStream fileInputStream = new FileInputStream(sourceFile);
-//                URL url = new URL(upLoadServerUri);
-//
-//                // Open a HTTP  connection to  the URL
-//                conn = (HttpURLConnection) url.openConnection();
-//                conn.setDoInput(true); // Allow Inputs
-//                conn.setDoOutput(true); // Allow Outputs
-//                conn.setUseCaches(false); // Don't use a Cached Copy
-//                conn.setRequestMethod("POST");
-//                conn.setRequestProperty("Connection", "Keep-Alive");
-//                conn.setRequestProperty("ENCTYPE", "multipart/form-data");
-//                conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
-//                conn.setRequestProperty("uploaded_file", fileName);
-//
-//                dos = new DataOutputStream(conn.getOutputStream());
-//
-//                dos.writeBytes(twoHyphens + boundary + lineEnd);
-//                dos.writeBytes("Content-Disposition: form-data; name=uploaded_file;filename=" + fileName + "" + lineEnd);
-//
-//                dos.writeBytes(lineEnd);
-//
-//                // create a buffer of  maximum size
-//                bytesAvailable = fileInputStream.available();
-//
-//                bufferSize = Math.min(bytesAvailable, maxBufferSize);
-//                buffer = new byte[bufferSize];
-//
-//                // read file and write it into form...
-//                bytesRead = fileInputStream.read(buffer, 0, bufferSize);
-//
-//                while (bytesRead > 0) {
-//
-//                    dos.write(buffer, 0, bufferSize);
-//                    bytesAvailable = fileInputStream.available();
-//                    bufferSize = Math.min(bytesAvailable, maxBufferSize);
-//                    bytesRead = fileInputStream.read(buffer, 0, bufferSize);
-//
-//                }
-//
-//                // send multipart form data necesssary after file data...
-//                dos.writeBytes(lineEnd);
-//                dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
-//
-//                // Responses from the server (code and message)
-//                serverResponseCode = conn.getResponseCode();
-//                String serverResponseMessage = conn.getResponseMessage();
-//
-//                Log.i("uploadFile", "HTTP Response is : "
-//                        + serverResponseMessage + ": " + serverResponseCode);
-//
-//                if(serverResponseCode == 200){
-//
-//                    mActivity.runOnUiThread(new Runnable() {
-//                        public void run() {
-//
-//                            String msg = "File Upload Completed.\n\n See uploaded file here : \n\n"
-//                                    + " http://www.androidexample.com/media/uploads/"
-//                                    + "download.jpg";
-//
-//                            messageText.setText(msg);
-//                            Toast.makeText(mContext, "File Upload Complete.",
-//                                    Toast.LENGTH_SHORT).show();
-//                        }
-//                    });
-//                }
-//
-//                //close the streams //
-//                fileInputStream.close();
-//                dos.flush();
-//                dos.close();
-//
-//            } catch (MalformedURLException ex) {
-//
-//                dialog.dismiss();
-//                ex.printStackTrace();
-//
-//                mActivity.runOnUiThread(new Runnable() {
-//                    public void run() {
-//                        messageText.setText("MalformedURLException Exception : check script url.");
-//                        Toast.makeText(mContext, "MalformedURLException",
-//                                Toast.LENGTH_SHORT).show();
-//                    }
-//                });
-//
-//                Log.e("Upload file to server", "error: " + ex.getMessage(), ex);
-//            } catch (Exception e) {
-//
-//                dialog.dismiss();
-//                e.printStackTrace();
-//
-//                mActivity.runOnUiThread(new Runnable() {
-//                    public void run() {
-//                        messageText.setText("Got Exception : see logcat ");
-//                        Toast.makeText(mContext, "Got Exception : see logcat ",
-//                                Toast.LENGTH_SHORT).show();
-//                    }
-//                });
-//                Log.e("Upload Exception", "Exception : " + e.getMessage(), e);
-//            }
-//            dialog.dismiss();
-//            return serverResponseCode;
-//
-//        } // End else block
-//    }
-
     /***********************************************************************************************
-     * On Click Listeners for Choose Image From Gallery and Click Image from Camera.
+     * On Click Listeners for Choose Photo From Gallery and Click Photo from Camera.
      * @param v
      */
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.button_choose_from_gallery:
-                chooseImageFromGallery();
+            case R.id.chose_img:
+                if(!img_name.getText().toString().isEmpty() && !doctor_name.getText().toString().isEmpty()) {
+                    choseImage();
+                }else{
+                    Toast.makeText(getActivity(),"Required: Photo Name & Doctor Name",Toast.LENGTH_SHORT).show();
+                }
                 break;
-            case R.id.button_click_from_camera:
-                chooseImageFromCamera();
+            case R.id.search:
+                chooseImageFromDatabase();
                 break;
         }
     }
 
-    private void chooseImageFromGallery() {
 
-        Intent i = new Intent(
-                Intent.ACTION_PICK,
-                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+    private void choseImage() {
+        /*************************** Camera Intent Start ************************/
 
-        startActivityForResult(i, IMAGE_PICK_REQUEST_CODE);
-    }
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+        }
 
-    private void chooseImageFromCamera() {
-
-//
-//        /*************************** Camera Intent Start ************************/
-//
-//        // Define the file-name to save photo taken by Camera activity
-//
-        String fileName = "Camera_Example.jpg";
-//
-//        // Create parameters for Intent with filename
-//
-        ContentValues values = new ContentValues();
-
-        values.put(MediaStore.Images.Media.TITLE, fileName);
-
-        values.put(MediaStore.Images.Media.DESCRIPTION,"Image capture by camera");
-//
-//        // imageUri is the current activity attribute, define and save it for later usage
-//
-        imageUri = mContext.getContentResolver().insert(
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-//
-//        /**** EXTERNAL_CONTENT_URI : style URI for the "primary" external storage volume. ****/
-//
-//
-//        // Standard Intent action that can be sent to have the camera
-//        // application capture an image and return it.
-//
-        Intent intent = new Intent( MediaStore.ACTION_IMAGE_CAPTURE );
-
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-
-        intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
-
-        startActivityForResult( intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
-
-//          for storing pics in a specific location
-//        Intent imageIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-//        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-//
-//        //folder stuff
-//        File imagesFolder = new File(Environment.getExternalStorageDirectory(), "MyImages");
-//        imagesFolder.mkdirs();
-//
-//        File image = new File(imagesFolder, "QR_" + timeStamp + ".png");
-//        Uri uriSavedImage = Uri.fromFile(image);
-//
-//        imageIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriSavedImage);
-//        startActivityForResult(imageIntent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
         /*************************** Camera Intent End ************************/
-
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == IMAGE_PICK_REQUEST_CODE && resultCode == RESULT_OK && null != data) {
-            Uri selectedImage = data.getData();
-            Log.i("Abdul",String.valueOf(selectedImage));
-            String[] filePathColumn = { MediaStore.Images.Media.DATA };
-
-            Cursor cursor = getActivity().getContentResolver().query(selectedImage,
-                    filePathColumn, null, null, null);
-            cursor.moveToFirst();
-
-            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            String picturePath = cursor.getString(columnIndex);
-
-            cursor.close();
-
-            imageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));
-
-        }
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            String[] filePathColumn = { MediaStore.Images.Media.DATA };
-
-            Cursor cursor = getActivity().getContentResolver().query(imageUri,
-                    filePathColumn, null, null, null);
-            cursor.moveToFirst();
-
-            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            String picturePath = cursor.getString(columnIndex);
-
-            cursor.close();
-
-            imageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+            Log.i("Abdul", String.valueOf(data.getExtras().get("data")));
+            Bitmap yourBitmap = (Bitmap) data.getExtras().get("data");
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            yourBitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);
+            byte[] bArray = bos.toByteArray();
+            String date = DateFormat.getDateTimeInstance().format(new Date());
+            contentValues = new ContentValues();
+            contentValues.put(dbHelper.DOCTOR, doctor_name.getText().toString());
+            contentValues.put(dbHelper.IMAGE_NAME, img_name.getText().toString());
+            contentValues.put(dbHelper.IMAGE, bArray);
+            contentValues.put(dbHelper.IMAGE_DATE,date);
+            sqlDB.insert(IMAGE_TABLE, null, contentValues);
         }
-
-
     }
+
+    private void chooseImageFromDatabase() {
+
+        Cursor cursor = sqlDB.rawQuery("SELECT * FROM "+dbHelper.IMAGE_TABLE, null);
+        cursor.moveToFirst();
+//        Toast.makeText(getActivity(),"table rows: " + String.valueOf(cursor.getCount()),Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getActivity(),"Spinner Value "+ String.valueOf(spinner.getSelectedItem()),Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getActivity(),"date " + cursor.getString(cursor.getColumnIndex(dbHelper.IMAGE_DATE)),Toast.LENGTH_SHORT).show();
+        do{
+            Photo photo = new Photo();
+            byte[] byteArray = cursor.getBlob(4);
+
+            Bitmap bm = BitmapFactory.decodeByteArray(byteArray, 0 ,byteArray.length);
+            photo.setName(cursor.getString(cursor.getColumnIndex(dbHelper.IMAGE_NAME)));
+            photo.setDoctor(cursor.getString(cursor.getColumnIndex(dbHelper.DOCTOR)));
+            photo.setDate(cursor.getString(cursor.getColumnIndex(dbHelper.IMAGE_DATE)));
+            photo.setImage(bm);
+            mPhotosList.add(photo);
+            mAdapter.notifyDataSetChanged();
+        }while (cursor.moveToNext());
+    }
+
 }

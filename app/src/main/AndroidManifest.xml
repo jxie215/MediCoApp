@@ -6,8 +6,11 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-feature android:name="android.hardware.camera"
-    android:required="true" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+
     <application
         android:name=".patientrecord.utils.VolleyController"
         android:allowBackup="true"
@@ -36,9 +39,14 @@
             android:name=".patientrecord.medicinereminder.AlarmNotification"
             android:label="@string/title_activity_alarm_notification"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".doctor.DoctorMainActivity"></activity>
-        <activity android:name=".RegistrationActivity"
-            android:parentActivityName=".LoginActivity"></activity>
+        <activity android:name=".doctor.DoctorMainActivity" />
+        <activity
+            android:name=".RegistrationActivity"
+            android:parentActivityName=".LoginActivity" />
+        <activity android:name=".patientrecord.uploadimage.ImageActivity"
+            android:parentActivityName=".patientrecord.PatientRecord">
+
+        </activity>
     </application>
 
 </manifest>

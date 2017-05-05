@@ -29,6 +29,16 @@ public class DBHelper extends SQLiteOpenHelper{
     public static final String DOC_SLOT11 = "doc_slot11";
     public static final String DOC_SLOT12 = "doc_slot12";
 
+    /*---------------------image uploader table----------------------*/
+
+    public static final String IMAGE_TABLE = "image_upload";
+    public static final String IMAGE_ID = "image_id";
+    public static final String IMAGE_NAME = "image_name";
+    public static final String DOCTOR = "doctor";
+    public static final String IMAGE = "image";
+    public static final String IMAGE_DATE = "image_date";
+
+
     public static final int VERSION = 1;
 
     private Context mContext = null;
@@ -60,6 +70,17 @@ public class DBHelper extends SQLiteOpenHelper{
                 + DOC_SLOT11 + " TEXT, "
                 + DOC_SLOT12 +  " TEXT)";
         sqLiteDatabase.execSQL(createDocTable);
+
+        /*-------------image upload table---------------------------*/
+
+        String createImageTable = " CREATE TABLE " + IMAGE_TABLE + " ("
+                + IMAGE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + DOCTOR + " TEXT, "
+                + IMAGE_DATE + " TEXT, "
+                + IMAGE_NAME + " TEXT, "
+                + IMAGE + " BLOB)";
+        sqLiteDatabase.execSQL(createImageTable);
+
     }
 
     @Override
