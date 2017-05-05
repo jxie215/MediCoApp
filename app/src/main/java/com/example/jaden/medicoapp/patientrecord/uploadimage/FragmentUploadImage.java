@@ -170,28 +170,35 @@ public class FragmentUploadImage extends Fragment implements View.OnClickListene
             contentValues.put(dbHelper.IMAGE, bArray);
             contentValues.put(dbHelper.IMAGE_DATE,date);
             sqlDB.insert(IMAGE_TABLE, null, contentValues);
+            img_name.setText("");
+            doctor_name.setText("");
         }
     }
 
     private void chooseImageFromDatabase() {
-
+        mPhotosList.clear();
+        mAdapter.notifyDataSetChanged();
         Cursor cursor = sqlDB.rawQuery("SELECT * FROM "+dbHelper.IMAGE_TABLE, null);
-        cursor.moveToFirst();
+        if(cursor.getCount()>0) {
+            cursor.moveToFirst();
 //        Toast.makeText(getActivity(),"table rows: " + String.valueOf(cursor.getCount()),Toast.LENGTH_SHORT).show();
 //        Toast.makeText(getActivity(),"Spinner Value "+ String.valueOf(spinner.getSelectedItem()),Toast.LENGTH_SHORT).show();
 //        Toast.makeText(getActivity(),"date " + cursor.getString(cursor.getColumnIndex(dbHelper.IMAGE_DATE)),Toast.LENGTH_SHORT).show();
-        do{
-            Photo photo = new Photo();
-            byte[] byteArray = cursor.getBlob(4);
+            do {
+                Photo photo = new Photo();
+                byte[] byteArray = cursor.getBlob(4);
 
-            Bitmap bm = BitmapFactory.decodeByteArray(byteArray, 0 ,byteArray.length);
-            photo.setName(cursor.getString(cursor.getColumnIndex(dbHelper.IMAGE_NAME)));
-            photo.setDoctor(cursor.getString(cursor.getColumnIndex(dbHelper.DOCTOR)));
-            photo.setDate(cursor.getString(cursor.getColumnIndex(dbHelper.IMAGE_DATE)));
-            photo.setImage(bm);
-            mPhotosList.add(photo);
-            mAdapter.notifyDataSetChanged();
-        }while (cursor.moveToNext());
+                Bitmap bm = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+                photo.setName(cursor.getString(cursor.getColumnIndex(dbHelper.IMAGE_NAME)));
+                photo.setDoctor(cursor.getString(cursor.getColumnIndex(dbHelper.DOCTOR)));
+                photo.setDate(cursor.getString(cursor.getColumnIndex(dbHelper.IMAGE_DATE)));
+                photo.setImage(bm);
+                mPhotosList.add(photo);
+                mAdapter.notifyDataSetChanged();
+            } while (cursor.moveToNext());
+        }else{
+            Toast.makeText(getActivity(),"No Such Record in Database",Toast.LENGTH_SHORT).show();
+        }
     }
 
 }
