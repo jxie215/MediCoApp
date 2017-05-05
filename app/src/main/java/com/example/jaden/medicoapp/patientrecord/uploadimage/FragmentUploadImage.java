@@ -172,6 +172,10 @@ public class FragmentUploadImage extends Fragment implements View.OnClickListene
             sqlDB.insert(IMAGE_TABLE, null, contentValues);
             img_name.setText("");
             doctor_name.setText("");
+            Toast.makeText(getActivity(),"Image Added Successfully",Toast.LENGTH_SHORT).show();
+        }
+        else if(requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == Activity.RESULT_CANCELED){
+            Toast.makeText(getActivity(),"Image Upload Cancelled",Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -196,12 +200,8 @@ public class FragmentUploadImage extends Fragment implements View.OnClickListene
                 Toast.makeText(getActivity(),"Select a Category from List",Toast.LENGTH_SHORT).show();
                 return;
             }
-            //cursor = sqlDB.rawQuery("SELECT * FROM " + dbHelper.IMAGE_TABLE, null);
             if (cursor.getCount() > 0) {
                 cursor.moveToFirst();
-//        Toast.makeText(getActivity(),"table rows: " + String.valueOf(cursor.getCount()),Toast.LENGTH_SHORT).show();
-//        Toast.makeText(getActivity(),"Spinner Value "+ String.valueOf(spinner.getSelectedItem()),Toast.LENGTH_SHORT).show();
-//        Toast.makeText(getActivity(),"date " + cursor.getString(cursor.getColumnIndex(dbHelper.IMAGE_DATE)),Toast.LENGTH_SHORT).show();
                 do {
                     Photo photo = new Photo();
                     byte[] byteArray = cursor.getBlob(4);
@@ -220,7 +220,7 @@ public class FragmentUploadImage extends Fragment implements View.OnClickListene
         }else{
             Toast.makeText(getActivity(), "Enter a search term", Toast.LENGTH_SHORT).show();
         }
-
+        edit.setText("");
     }
 
 }
