@@ -187,15 +187,15 @@ public class FragmentUploadImage extends Fragment implements View.OnClickListene
 
             if(spinner.getSelectedItem().toString().compareTo("Name")==0){
                 cursor = sqlDB.rawQuery("SELECT * FROM " + dbHelper.IMAGE_TABLE + " where "
-                        + dbHelper.IMAGE_NAME + " LIKE '%" +edit.getText().toString() +"%'", null);
+                        + dbHelper.IMAGE_NAME + " LIKE '%" + edit.getText().toString() +"%'", null);
             }
             else if(spinner.getSelectedItem().toString().compareTo("Date")==0){
                 cursor = sqlDB.rawQuery("SELECT * FROM " + dbHelper.IMAGE_TABLE + " where "
-                        + dbHelper.IMAGE_DATE + " LIKE '%" +edit.getText().toString() +"%'", null);
+                        + dbHelper.IMAGE_DATE + " LIKE '%" + edit.getText().toString() +"%'", null);
             }
             else if(spinner.getSelectedItem().toString().compareTo("Doctor")==0){
                 cursor = sqlDB.rawQuery("SELECT * FROM " + dbHelper.IMAGE_TABLE + " where "
-                        + dbHelper.IMAGE_NAME + " LIKE '%" +edit.getText().toString() +"%'", null);
+                        + dbHelper.DOCTOR + " LIKE '%" + edit.getText().toString() +"%'", null);
             }else{
                 Toast.makeText(getActivity(),"Select a Category from List",Toast.LENGTH_SHORT).show();
                 return;
